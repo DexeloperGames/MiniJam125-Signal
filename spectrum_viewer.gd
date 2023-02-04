@@ -52,7 +52,9 @@ func _ready():
 func _process(delta):
 	pass
 
-
+func update_view_times():
+	$SubViewport/ColorRect.material.set_shader_parameter("start_time", view_time_start)
+	$SubViewport/ColorRect.material.set_shader_parameter("end_time", view_time_end)
 func _on_pre_frame_draw():
 #	pass
 	$SubViewport.size.x = ceil(get_global_rect().size.x)

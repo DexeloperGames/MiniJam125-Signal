@@ -1,4 +1,5 @@
 extends Resource
+class_name ChartResource
 
 @export var base_bpm : float = 120.0
 @export var time_signature : Vector2i = Vector2i(4,4)

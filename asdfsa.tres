@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ChartResource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ChartResource.gd" id="1_yomlk"]
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_byxu8"]
+
+[resource]
+script = ExtResource("1_yomlk")
+base_bpm = 120.0
+time_signature = Vector2i(4, 4)
+chart_data = PackedVector3Array(0, 0, 0.46875)
+audio = SubResource("AudioStreamWAV_byxu8")
+difficulty = 0.0
+title = "Unknown"
+artist = "Also Unknown"
+charter = "Still Unknown"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://df3yce85i3jkd"]
+[gd_scene load_steps=6 format=3 uid="uid://df3yce85i3jkd"]
 
 [ext_resource type="Script" path="res://scenes/editor/rhythm_chart_input.gd" id="1_hcyk2"]
 [ext_resource type="Shader" uid="uid://dsexwnb02esc" path="res://scenes/editor/chart_rhythm_grid_shader.tres" id="2_m3xyx"]
@@ -6,9 +6,21 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qjft7"]
 shader = ExtResource("2_m3xyx")
 shader_parameter/Display_Start_Time = 0.0
-shader_parameter/Display_End_Time = 26.455
+shader_parameter/Display_End_Time = 12.377
+shader_parameter/Offset = null
+shader_parameter/BPM = 128.0
+shader_parameter/Divisions = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ojf6k"]
+size = Vector2(100, 100)
+
+[sub_resource type="MultiMesh" id="MultiMesh_u50y7"]
+instance_count = 1
+mesh = SubResource("QuadMesh_ojf6k")
+buffer = PackedFloat32Array(1, 0, 0, 0, 0, 1, 1, 1)
 
 [node name="Rhythm Chart Input" type="Control"]
+clip_children = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +28,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hcyk2")
-display_end_time = 5.334
+display_end_time = 2.715
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_qjft7")
@@ -26,5 +38,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="."]
+multimesh = SubResource("MultiMesh_u50y7")
 
 [connection signal="gui_input" from="ColorRect" to="." method="_on_color_rect_gui_input"]
