@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://df3yce85i3jkd"]
+[gd_scene load_steps=7 format=3 uid="uid://df3yce85i3jkd"]
 
 [ext_resource type="Script" path="res://scenes/editor/rhythm_chart_input.gd" id="1_hcyk2"]
 [ext_resource type="Shader" uid="uid://dsexwnb02esc" path="res://scenes/editor/chart_rhythm_grid_shader.tres" id="2_m3xyx"]
+[ext_resource type="Script" path="res://scenes/editor/Note Holder.gd" id="3_83psl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qjft7"]
 shader = ExtResource("2_m3xyx")
@@ -17,7 +18,7 @@ size = Vector2(100, 100)
 [sub_resource type="MultiMesh" id="MultiMesh_u50y7"]
 instance_count = 1
 mesh = SubResource("QuadMesh_ojf6k")
-buffer = PackedFloat32Array(1, 0, 0, 0, 0, 1, 1, 1)
+buffer = PackedFloat32Array(1, 0, 0, 0, 0, 1, 0, 1)
 
 [node name="Rhythm Chart Input" type="Control"]
 clip_children = 2
@@ -41,5 +42,8 @@ grow_vertical = 2
 
 [node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="."]
 multimesh = SubResource("MultiMesh_u50y7")
+
+[node name="Note Holder" type="Node2D" parent="."]
+script = ExtResource("3_83psl")
 
 [connection signal="gui_input" from="ColorRect" to="." method="_on_color_rect_gui_input"]

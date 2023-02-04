@@ -29,7 +29,7 @@ bg_color = Color(1, 0.34902, 0.192157, 1)
 expand_margin_top = 40.0
 expand_margin_bottom = 40.0
 
-[node name="Chart Editor" type="Control" groups=["Display Time Recievers", "Note Recievers"]]
+[node name="Chart Editor" type="Control" node_paths=PackedStringArray("audio_stream_player", "playback_bar", "rhythm_chart_input", "spectrum_viewer", "playback_button", "save_popup", "open_popup") groups=["Display Time Recievers", "Note Recievers"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,6 +39,23 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_7jfc3")
 audio = ExtResource("4_vfbd0")
+audio_stream_player = NodePath("AudioStreamPlayer")
+playback_bar = NodePath("Player Bar/HBoxContainer/HSlider")
+rhythm_chart_input = NodePath("Rhythm Chart Input")
+spectrum_viewer = NodePath("Spectrum Viewer")
+playback_button = NodePath("Player Bar/HBoxContainer/Button")
+save_popup = NodePath("SaveChart")
+open_popup = NodePath("OpenChart")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [node name="Spectrum Viewer" parent="." instance=ExtResource("2_jqnch")]
 layout_mode = 1
@@ -63,7 +80,6 @@ mouse_filter = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_vfbd0")
-pitch_scale = 0.48
 
 [node name="Player Bar" type="Control" parent="."]
 layout_mode = 1

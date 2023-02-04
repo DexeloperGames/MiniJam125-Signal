@@ -31,6 +31,7 @@ extends Control
 		display_length = display_end_time-display_start_time
 		return display_length
 @export var accept_inputs : bool = true
+var note_times : PackedFloat32Array = PackedFloat32Array([])
 var zoom_factor = 1.0
 # Called when the node enters the scene tree for the first time.
 #func _init():
@@ -51,6 +52,9 @@ func _process(delta):
 	var p = convert_time_to_position(t)
 	$MultiMeshInstance2D.global_position = p
 	$MultiMeshInstance2D.position.y = size.y/2.0
+	$"Note Holder".global_transform = get_global_transform_with_canvas()
+	$"Note Holder".global_position = convert_time_to_position(0.0)
+	$"Note Holder".scale.x = size.x/display_length
 
 func convert_position_to_time(global_pos):
 	var matrix = $ColorRect.get_global_transform_with_canvas()
@@ -69,7 +73,21 @@ func get_snapped_time(real_time):
 
 func add_note(time):
 	print("ADDING THE NOTE AT ", time)
-	get_tree().call_group("Note Recievers", "recieve_note_added", time)
+#	get_tree().call_group("Note Recievers", "recieve_note_added", time)
+	var idx = note_times.bsearch(time)
+	note_times.insert(idx, time)
+	draw_notes()
+
+func remove_note(time):
+	print("REMOVING NEAREST NOTE TO ", time)
+	if note_times.is_empty(): return
+	var idx = note_times.bsearch(time)
+	note_times.remove_at(idx)
+	draw_notes()
+
+func draw_notes():
+	$"Note Holder".drawn_notes = note_times
+	$"Note Holder".queue_redraw()
 
 func _on_color_rect_gui_input(event):
 	if !accept_inputs: return
@@ -102,6 +120,11 @@ func _on_color_rect_gui_input(event):
 		var note_time = get_snapped_time(mouse_time)
 		add_note(note_time)
 		pass
+	if event.is_action_pressed("remove_note"):
+		var mouse_pos = get_global_mouse_position()
+		var mouse_time = convert_position_to_time(mouse_pos)
+		var note_time = get_snapped_time(mouse_time)
+		remove_note(note_time)
 	pass # Replace with function body.
 
 func _input(event):
