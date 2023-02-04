@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://3ntbhy55b8k6"]
+
+[ext_resource type="Script" path="res://spectrum_viewer.gd" id="1_tmqtn"]
+[ext_resource type="Shader" uid="uid://4yad7cbst0ca" path="res://spectrum_viewer.tres" id="2_cii1e"]
+[ext_resource type="Shader" path="res://assets/shaders/audio/spectrum_shader.gdshader" id="3_5ilqn"]
+[ext_resource type="AudioStream" uid="uid://mggfbwal85kd" path="res://charts/CR4Z31 B4553S/CR4Z31 B4553S 128.wav" id="3_7psg6"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1iqje"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w53gf"]
+resource_local_to_scene = true
+shader = ExtResource("2_cii1e")
+shader_parameter/View_Frequency_Start = 20.0
+shader_parameter/View_Frequency_End = 2084.78
+shader_parameter/Spectrum_Viewport = SubResource("ViewportTexture_1iqje")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3vpcl"]
+shader = ExtResource("3_5ilqn")
+shader_parameter/sample_rate = 44100
+shader_parameter/start_time = 0.043
+shader_parameter/end_time = 1.045
+shader_parameter/divisor = 200.0
+
+[node name="Spectrum Viewer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tmqtn")
+audio = ExtResource("3_7psg6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_w53gf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport"]
+material = SubResource("ShaderMaterial_3vpcl")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.14902, 0.588235, 1)

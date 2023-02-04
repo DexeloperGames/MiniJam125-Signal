@@ -1,0 +1,88 @@
+[gd_resource type="VisualShader" load_steps=7 format=3 uid="uid://uo4uvxsr4e4f"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_vo6c2"]
+input_name = "screen_uv"
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_2a6i6"]
+
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_dkle0"]
+size = Vector2(470.79, 302.46)
+expression = "num2 = floatBitsToUint(num);"
+
+[sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_a8qub"]
+size = Vector2(454.974, 346.988)
+expression = "bit = (bitfieldExtract(num, idx, 1)!=uint(0));"
+
+[sub_resource type="VisualShaderNodeIntConstant" id="VisualShaderNodeIntConstant_0r5ml"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_1r2q0"]
+default_input_values = [0, 0.0, 1, 32.0]
+operator = 2
+
+[resource]
+code = "shader_type canvas_item;
+
+
+
+void fragment() {
+// Input:2
+	vec2 n_out2p0 = SCREEN_UV;
+
+
+// VectorDecompose:3
+	float n_out3p0 = vec3(n_out2p0, 0.0).x;
+	float n_out3p1 = vec3(n_out2p0, 0.0).y;
+	float n_out3p2 = vec3(n_out2p0, 0.0).z;
+
+
+	uint n_out4p0;
+// Expression:4
+	{
+		n_out4p0 = floatBitsToUint(n_out3p0);
+	}
+
+
+// FloatOp:7
+	float n_in7p1 = 32.00000;
+	float n_out7p0 = n_out3p1 * n_in7p1;
+
+
+	bool n_out5p0;
+// Expression:5
+	n_out5p0 = false;
+	{
+		n_out5p0 = (bitfieldExtract(n_out4p0, int(n_out7p0), 1)!=uint(0));
+	}
+
+
+// Output:0
+	COLOR.rgb = vec3(n_out5p0 ? 1.0 : 0.0);
+
+
+}
+"
+graph_offset = Vector2(-219.504, -86.3723)
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(1420, 40)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_vo6c2")
+nodes/fragment/2/position = Vector2(-500, 400)
+nodes/fragment/3/node = SubResource("VisualShaderNodeVectorDecompose_2a6i6")
+nodes/fragment/3/position = Vector2(-140, 280)
+nodes/fragment/4/node = SubResource("VisualShaderNodeExpression_dkle0")
+nodes/fragment/4/position = Vector2(180, 160)
+nodes/fragment/4/size = Vector2(470.79, 302.46)
+nodes/fragment/4/input_ports = "0,0,num;"
+nodes/fragment/4/output_ports = "0,2,num2;"
+nodes/fragment/4/expression = "num2 = floatBitsToUint(num);"
+nodes/fragment/5/node = SubResource("VisualShaderNodeExpression_a8qub")
+nodes/fragment/5/position = Vector2(820, 280)
+nodes/fragment/5/size = Vector2(454.974, 346.988)
+nodes/fragment/5/input_ports = "0,2,num;1,1,idx;"
+nodes/fragment/5/output_ports = "0,6,bit;"
+nodes/fragment/5/expression = "bit = (bitfieldExtract(num, idx, 1)!=uint(0));"
+nodes/fragment/6/node = SubResource("VisualShaderNodeIntConstant_0r5ml")
+nodes/fragment/6/position = Vector2(400, 480)
+nodes/fragment/7/node = SubResource("VisualShaderNodeFloatOp_1r2q0")
+nodes/fragment/7/position = Vector2(334.476, 600.926)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 0, 3, 0, 4, 0, 4, 0, 5, 0, 5, 0, 0, 0, 3, 1, 7, 0, 7, 0, 5, 1)

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d1itxiw4c3ohs"
+path="res://.godot/imported/CR4Z31 B4553S 32 BPM.wav-13d4a3a249c07d654861e4a67c800d83.sample"
+
+[deps]
+
+source_file="res://charts/CR4Z31 B4553S/CR4Z31 B4553S 32 BPM.wav"
+dest_files=["res://.godot/imported/CR4Z31 B4553S 32 BPM.wav-13d4a3a249c07d654861e4a67c800d83.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
