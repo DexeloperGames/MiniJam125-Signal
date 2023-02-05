@@ -134,6 +134,22 @@ ok_button_text = "Save"
 dialog_text = "Save Chart"
 filters = PackedStringArray("*.tres")
 
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 79.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Rhythm Charting" type="Control" parent="TabContainer"]
+layout_mode = 2
+
+[node name="Direction Charting" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
 [connection signal="pressed" from="Player Bar/HBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="drag_ended" from="Player Bar/HBoxContainer/HSlider" to="." method="_on_h_slider_drag_ended"]
 [connection signal="value_changed" from="Player Bar/HBoxContainer/SpinBox" to="." method="_on_spin_box_value_changed"]

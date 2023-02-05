@@ -1,0 +1,510 @@
+[gd_scene load_steps=15 format=3 uid="uid://cba20kscpgbff"]
+
+[ext_resource type="Script" path="res://scenes/editor/note_chart_input.gd" id="1_37qc3"]
+[ext_resource type="PackedScene" uid="uid://bo65v4easp7jf" path="res://scenes/base_level/chart_dimension.tscn" id="2_cktpt"]
+[ext_resource type="Shader" uid="uid://clr6qmgtkulm" path="res://scenes/editor/direction_input_indicators.tres" id="3_bfwom"]
+[ext_resource type="Texture2D" uid="uid://bpd07e4sm5edv" path="res://assets/images/arrow.png" id="4_kqhxk"]
+[ext_resource type="Shader" uid="uid://c7l8koy258ul8" path="res://scenes/editor/direction_input_button.tres" id="5_gla0p"]
+[ext_resource type="Script" path="res://scenes/editor/note_input_grid_button.gd" id="6_8qia6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hwryv"]
+shader = ExtResource("3_bfwom")
+shader_parameter/Rotation = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ccfub"]
+shader = ExtResource("3_bfwom")
+shader_parameter/Rotation = 90.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e57qs"]
+shader = ExtResource("3_bfwom")
+shader_parameter/Rotation = -90.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ty6e3"]
+shader = ExtResource("3_bfwom")
+shader_parameter/Rotation = 180.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_70ghj"]
+shader = ExtResource("5_gla0p")
+shader_parameter/HueColor = Color(1, 0, 1, 1)
+shader_parameter/Rotation = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0olb"]
+shader = ExtResource("5_gla0p")
+shader_parameter/HueColor = Color(0, 1, 1, 1)
+shader_parameter/Rotation = 90.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vswf1"]
+shader = ExtResource("5_gla0p")
+shader_parameter/HueColor = Color(0, 1, 0, 1)
+shader_parameter/Rotation = -90.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xje6f"]
+shader = ExtResource("5_gla0p")
+shader_parameter/HueColor = Color(1, 0, 0, 1)
+shader_parameter/Rotation = 180.0
+
+[node name="note_chart_input" type="Control" node_paths=PackedStringArray("chart_dimension", "chart_dimension_viewport", "chart_dimensions_viewport_container", "audio_stream_player", "button_grid_container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_37qc3")
+chart_dimension = NodePath("SubViewportContainer/SubViewport/ChartDimension")
+chart_dimension_viewport = NodePath("SubViewportContainer/SubViewport")
+chart_dimensions_viewport_container = NodePath("SubViewportContainer")
+audio_stream_player = NodePath("AudioStreamPlayer")
+button_grid_container = NodePath("Direction Array Buttons")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="ChartDimension" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_cktpt")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Direction Array Buttons" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 416.0
+grow_vertical = 2
+columns = 4
+
+[node name="TextureRect" type="TextureRect" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_hwryv")
+layout_mode = 2
+texture = ExtResource("4_kqhxk")
+stretch_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_ccfub")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_kqhxk")
+stretch_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e57qs")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_kqhxk")
+stretch_mode = 3
+
+[node name="TextureRect4" type="TextureRect" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_ty6e3")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_kqhxk")
+stretch_mode = 3
+
+[node name="button_0_0" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_0" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_0" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_0" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_0_1" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_1" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_1" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_1" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_0_2" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_2" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_2" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_2" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_0_3" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_3" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_3" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_3" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_0_4" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_4" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_4" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_4" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_0_5" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_5" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_5" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_5" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_0_6" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_6" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_6" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_6" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_0_7" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_7" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_7" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_7" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_0_8" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_70ghj")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_1_8" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_e0olb")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_2_8" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_vswf1")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
+
+[node name="button_3_8" type="TextureButton" parent="Direction Array Buttons"]
+material = SubResource("ShaderMaterial_xje6f")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_pressed = ExtResource("4_kqhxk")
+texture_hover = ExtResource("4_kqhxk")
+stretch_mode = 3
+script = ExtResource("6_8qia6")
