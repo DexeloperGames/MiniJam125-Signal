@@ -2,11 +2,20 @@ extends Control
 
 @export var view_start_time : float = 0.0
 @export var view_end_time : float = 1.0
-@export var chart : ChartResource = ChartResource.new()
+@export var chart : ChartResource = ChartResource.new():
+	set(n_chart):
+		chart = n_chart
+		if not is_inside_tree(): await ready
+		direction_chart_input.chart = n_chart
 @export var audio : AudioStreamWAV
-@export var audio_stream_player : AudioStreamPlayer
+@export var audio_stream_player : AudioStreamPlayer:
+	set(n_stream_player):
+		audio_stream_player = n_stream_player
+		if not is_inside_tree(): await ready
+		direction_chart_input.audio_stream_player = n_stream_player
 @export var playback_bar : HSlider
 @export var rhythm_chart_input : Node
+@export var direction_chart_input : Node
 @export var spectrum_viewer : Node
 @export var playback_button : Button
 @export var save_popup : FileDialog
@@ -15,6 +24,10 @@ extends Control
 func _ready():
 	
 	playback_bar.max_value = audio_stream_player.stream.get_length()
+	self.audio_stream_player = audio_stream_player
+	self.chart = chart
+#	direction_chart_input.chart = chart
+	
 	pass # Replace with function body.
 
 func update_the_stuff():
@@ -56,8 +69,15 @@ func toggle_playback():
 
 func fill_chart_data():
 	chart.chart_data.clear()
-	for time in rhythm_chart_input.note_times:
-		chart.chart_data.append(Vector3(0.0,0.0,time))
+	for i in range(len(rhythm_chart_input.note_times)):#min(len(rhythm_chart_input.note_times),len(direction_chart_input.note_directions))):
+#		var dir = direction_chart_input.note_directions[i]
+		var dir = Vector2.ZERO #yeah i've completely given up on the built in editor ugh
+		var time = rhythm_chart_input.note_times[i]
+		chart.chart_data.append(Vector3(dir.x,dir.y,time))
+	self.chart = chart
+#	for time in rhythm_chart_input.note_times:
+#		chart.chart_data.append(Vector3(0.0,0.0,time))
+
 
 func _input(event):
 	if event is InputEventKey:
@@ -74,7 +94,11 @@ func _on_spin_box_value_changed(value):
 
 
 func _on_open_chart_file_selected(path):
-	chart = ResourceLoader.load(path)
+	self.chart = ResourceLoader.load(path)
+	var cached_data : Array[Vector3] = Array(chart.chart_data.duplicate())
+	cached_data.sort_custom(func(thing1, thing2): return thing1.z<thing2.z)
+	for i in range(len(cached_data)):
+		chart.chart_data[i] = cached_data[i]
 	rhythm_chart_input.note_times.clear()
 	for note in chart.chart_data:
 		var idx = rhythm_chart_input.note_times.bsearch(note.z)
@@ -102,4 +126,44 @@ func _on_h_slider_drag_ended(value_changed):
 func _on_button_pressed():
 	toggle_playback()
 	
+	pass # Replace with function body.
+
+
+func _on_tab_container_tab_button_pressed(tab):
+	print("tabbed over")
+	fill_chart_data()
+	pass # Replace with function body.
+
+
+func _on_tab_container_tab_changed(tab):
+	print("tabbed ove r2")
+	fill_chart_data()
+	pass # Replace with function body.
+
+
+func _on_bpm_box_value_changed(value):
+	chart.base_bpm = value
+	rhythm_chart_input.bpm = value
+	get_tree().call_group("Song Data Recievers", "recieve_bpm", value)
+	pass # Replace with function body.
+
+
+func _on_charter_line_edit_text_submitted(new_text):
+	print("yeah charter name ", new_text)
+	pass # Replace with function body.
+
+
+func _on_charter_line_edit_text_changed(new_text):
+	print("yeah charter name ", new_text)
+	chart.charter = new_text
+	pass # Replace with function body.
+
+
+func _on_artist_line_edit_text_changed(new_text):
+	chart.artist = new_text
+	pass # Replace with function body.
+
+
+func _on_song_title_line_edit_text_changed(new_text):
+	chart.title = new_text
 	pass # Replace with function body.

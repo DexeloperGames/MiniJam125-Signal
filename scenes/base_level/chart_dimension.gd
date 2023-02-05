@@ -19,25 +19,31 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var t = audio_stream_player.get_playback_position()
-	chart_position.progress = t*chart.base_bpm/60.0
+#	print(chart_path.)
+	if chart_path.curve.point_count > 1:
+		chart_position.progress = t*chart.base_bpm/60.0
 #	t+= delta
 	pass
 
 
 var direction_array = [Vector3.RIGHT,Vector3.FORWARD,Vector3.LEFT,Vector3.BACK]
 func load_chart():
+	print("doin the thing")
 	chart_path.curve.clear_points()
-	multi_mesh_instance.multimesh.instance_count = len(chart.chart_data)
+	print(chart.chart_data)
+	var working_data = Array(chart.chart_data).filter(func(note): return !(note == Vector3.ZERO or (note.y == 0.0 and note.x == 0.0)))
+	print(working_data)
+	multi_mesh_instance.multimesh.instance_count = len(working_data)
 	var idx = 0
 	var inst_idx = 0
 	var prev_pos = Vector3.ZERO
 	var prev_time = 0.0
-	for note in chart.chart_data:
+	for note in working_data:
 		var time_diff = note.z-prev_time
 		var beat_length = time_diff*chart.base_bpm/60.0
 		var dir = Vector3(note.x,0.0,note.y)
-		if dir.length() <= 0.5:
-			continue
+#		if dir.length() <= 0.5:
+#			continue
 		var new_pos = prev_pos+beat_length*dir
 		chart_path.curve.add_point(new_pos)
 		var mid_pos = (new_pos+prev_pos)/2.0

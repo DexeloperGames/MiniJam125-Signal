@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ChartResource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ChartResource.gd" id="1_vhf1m"]
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_b3p2m"]
+
+[resource]
+script = ExtResource("1_vhf1m")
+base_bpm = 120.0
+time_signature = Vector2i(4, 4)
+chart_data = PackedVector3Array(1, 0, 0, 0, -1, 0.46875, -1, 0, 0.9375, 0, 1, 1.40625, 1, 0, 1.875)
+audio = SubResource("AudioStreamWAV_b3p2m")
+difficulty = 0.0
+title = "Unknown"
+artist = "Also Unknown"
+charter = "Still Unknown"

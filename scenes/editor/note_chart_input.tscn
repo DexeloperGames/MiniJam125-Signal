@@ -80,6 +80,7 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 416.0
+offset_bottom = 605.0
 grow_vertical = 2
 columns = 4
 
@@ -508,3 +509,5 @@ texture_pressed = ExtResource("4_kqhxk")
 texture_hover = ExtResource("4_kqhxk")
 stretch_mode = 3
 script = ExtResource("6_8qia6")
+
+[connection signal="gui_input" from="Direction Array Buttons" to="." method="_on_direction_array_buttons_gui_input"]

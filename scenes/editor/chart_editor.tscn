@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfnbvghntd2j5"]
+[gd_scene load_steps=11 format=3 uid="uid://bfnbvghntd2j5"]
 
 [ext_resource type="Script" path="res://scenes/editor/chart_editor.gd" id="1_7jfc3"]
 [ext_resource type="PackedScene" uid="uid://df3yce85i3jkd" path="res://scenes/editor/rhythm_chart_input.tscn" id="1_v0xuw"]
 [ext_resource type="PackedScene" uid="uid://3ntbhy55b8k6" path="res://spectrum_viewer.tscn" id="2_jqnch"]
 [ext_resource type="AudioStream" uid="uid://mggfbwal85kd" path="res://charts/CR4Z31 B4553S/CR4Z31 B4553S 128.wav" id="4_vfbd0"]
+[ext_resource type="PackedScene" uid="uid://cba20kscpgbff" path="res://scenes/editor/note_chart_input.tscn" id="5_7ijle"]
 
 [sub_resource type="Gradient" id="Gradient_6a2pb"]
 offsets = PackedFloat32Array(1)
@@ -29,7 +30,7 @@ bg_color = Color(1, 0.34902, 0.192157, 1)
 expand_margin_top = 40.0
 expand_margin_bottom = 40.0
 
-[node name="Chart Editor" type="Control" node_paths=PackedStringArray("audio_stream_player", "playback_bar", "rhythm_chart_input", "spectrum_viewer", "playback_button", "save_popup", "open_popup") groups=["Display Time Recievers", "Note Recievers"]]
+[node name="Chart Editor" type="Control" node_paths=PackedStringArray("audio_stream_player", "playback_bar", "rhythm_chart_input", "direction_chart_input", "spectrum_viewer", "playback_button", "save_popup", "open_popup") groups=["Display Time Recievers", "Note Recievers"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,8 +42,9 @@ script = ExtResource("1_7jfc3")
 audio = ExtResource("4_vfbd0")
 audio_stream_player = NodePath("AudioStreamPlayer")
 playback_bar = NodePath("Player Bar/HBoxContainer/HSlider")
-rhythm_chart_input = NodePath("Rhythm Chart Input")
-spectrum_viewer = NodePath("Spectrum Viewer")
+rhythm_chart_input = NodePath("TabContainer/Rhythm Charting/Rhythm Chart Input")
+direction_chart_input = NodePath("TabContainer/Direction Charting/note_chart_input")
+spectrum_viewer = NodePath("TabContainer/Rhythm Charting/Spectrum Viewer")
 playback_button = NodePath("Player Bar/HBoxContainer/Button")
 save_popup = NodePath("SaveChart")
 open_popup = NodePath("OpenChart")
@@ -57,26 +59,113 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Spectrum Viewer" parent="." instance=ExtResource("2_jqnch")]
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 79.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Rhythm Charting" type="Control" parent="TabContainer"]
+clip_children = 2
+layout_mode = 2
+
+[node name="Spectrum Viewer" parent="TabContainer/Rhythm Charting" instance=ExtResource("2_jqnch")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
+offset_top = -55.0
+offset_bottom = -55.0
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="Rhythm Chart Input" parent="." instance=ExtResource("1_v0xuw")]
+[node name="Rhythm Chart Input" parent="TabContainer/Rhythm Charting" instance=ExtResource("1_v0xuw")]
 layout_mode = 1
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="TabContainer/Rhythm Charting"]
 layout_mode = 1
 anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
+offset_top = -110.0
 offset_right = 5.0
+offset_bottom = -110.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Direction Charting" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="note_chart_input" parent="TabContainer/Direction Charting" instance=ExtResource("5_7ijle")]
+layout_mode = 1
+
+[node name="Data Charting" type="Control" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Data Charting"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 239.0
+grow_vertical = 2
+
+[node name="Tempo Spinbox" type="HBoxContainer" parent="TabContainer/Data Charting/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Data Charting/VBoxContainer/Tempo Spinbox"]
+layout_mode = 2
+text = "Tempo: "
+
+[node name="SpinBox" type="SpinBox" parent="TabContainer/Data Charting/VBoxContainer/Tempo Spinbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 1000.0
+value = 100.0
+allow_greater = true
+suffix = "BPM"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Data Charting/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Data Charting/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Song Title: "
+
+[node name="SongTitleLineEdit" type="LineEdit" parent="TabContainer/Data Charting/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Unknown"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Data Charting/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Data Charting/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Artist: "
+
+[node name="ArtistLineEdit" type="LineEdit" parent="TabContainer/Data Charting/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Unknown"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="TabContainer/Data Charting/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Data Charting/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Charter: "
+
+[node name="CharterLineEdit" type="LineEdit" parent="TabContainer/Data Charting/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Unknown"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_vfbd0")
@@ -134,22 +223,13 @@ ok_button_text = "Save"
 dialog_text = "Save Chart"
 filters = PackedStringArray("*.tres")
 
-[node name="TabContainer" type="TabContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 79.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Rhythm Charting" type="Control" parent="TabContainer"]
-layout_mode = 2
-
-[node name="Direction Charting" type="Control" parent="TabContainer"]
-visible = false
-layout_mode = 2
-
+[connection signal="tab_button_pressed" from="TabContainer" to="." method="_on_tab_container_tab_button_pressed"]
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="value_changed" from="TabContainer/Data Charting/VBoxContainer/Tempo Spinbox/SpinBox" to="." method="_on_bpm_box_value_changed"]
+[connection signal="text_changed" from="TabContainer/Data Charting/VBoxContainer/HBoxContainer2/SongTitleLineEdit" to="." method="_on_song_title_line_edit_text_changed"]
+[connection signal="text_changed" from="TabContainer/Data Charting/VBoxContainer/HBoxContainer3/ArtistLineEdit" to="." method="_on_artist_line_edit_text_changed"]
+[connection signal="text_changed" from="TabContainer/Data Charting/VBoxContainer/HBoxContainer4/CharterLineEdit" to="." method="_on_charter_line_edit_text_changed"]
+[connection signal="text_submitted" from="TabContainer/Data Charting/VBoxContainer/HBoxContainer4/CharterLineEdit" to="." method="_on_charter_line_edit_text_submitted"]
 [connection signal="pressed" from="Player Bar/HBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="drag_ended" from="Player Bar/HBoxContainer/HSlider" to="." method="_on_h_slider_drag_ended"]
 [connection signal="value_changed" from="Player Bar/HBoxContainer/SpinBox" to="." method="_on_spin_box_value_changed"]

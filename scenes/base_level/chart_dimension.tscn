@@ -12,6 +12,14 @@
 render_priority = 0
 shader = ExtResource("2_qj1ny")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n3vug"]
+render_priority = 0
+shader = ExtResource("2_bfkuh")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_htk47"]
+material = SubResource("ShaderMaterial_n3vug")
+size = Vector2(10, 10)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bihyx"]
 render_priority = 0
 shader = ExtResource("2_6ob85")
@@ -24,14 +32,6 @@ transform_format = 1
 instance_count = 1
 mesh = SubResource("PlaneMesh_r0s2s")
 buffer = PackedFloat32Array(3.64338e-44, 3.36312e-44, 8.40779e-45, 3.08286e-44, 1.12104e-44, 8.40779e-45, 3.36312e-44, 3.08286e-44, 1.12104e-44, 2.8026e-44, 1.4013e-44, 1.12104e-44)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n3vug"]
-render_priority = 0
-shader = ExtResource("2_bfkuh")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_htk47"]
-material = SubResource("ShaderMaterial_n3vug")
-size = Vector2(10, 10)
 
 [sub_resource type="Environment" id="Environment_b2ug5"]
 background_mode = 1
@@ -62,6 +62,11 @@ material = SubResource("ShaderMaterial_de7vp")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.18, 0)
 fov = 90.0
 
+[node name="Ground Plane" type="MeshInstance3D" parent="Chart Path/Chart Position"]
+transform = Transform3D(0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0)
+mesh = SubResource("PlaneMesh_htk47")
+skeleton = NodePath("../Camera3D")
+
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Chart Path"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
 multimesh = SubResource("MultiMesh_47tbj")
@@ -69,11 +74,6 @@ multimesh = SubResource("MultiMesh_47tbj")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.946964, -0.30228, 0.109024, 0, 0.33928, 0.940686, -0.32134, -0.890795, 0.321286, 0, 0, 0)
 visible = false
-
-[node name="Ground Plane" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.914, 0, 0, 0, 0.914, 0, 0, 0, 0.914, 0, 0, 0)
-mesh = SubResource("PlaneMesh_htk47")
-skeleton = NodePath("../Chart Path/Chart Position/Camera3D")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_b2ug5")

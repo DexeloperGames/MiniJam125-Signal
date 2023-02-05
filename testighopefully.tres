@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ChartResource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ChartResource.gd" id="1_vxfpt"]
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_cy12i"]
+
+[resource]
+script = ExtResource("1_vxfpt")
+base_bpm = 128.0
+time_signature = Vector2i(4, 4)
+chart_data = PackedVector3Array(-1, 0, 0, 0, 1, 0.46875, 1, 0, 0.9375, 0, -1, 1.40625)
+audio = SubResource("AudioStreamWAV_cy12i")
+difficulty = 0.0
+title = "crazybass"
+artist = "yaboi"
+charter = "yabvoi"

@@ -110,7 +110,7 @@ func _on_color_rect_gui_input(event):
 			var pan_scroll_amount = Input.get_axis("scroll_backwards","scroll_forwards")
 			
 	#		var display_length = display_end_time-display_start_time
-			var scroll_amount = display_length*0.0025*pan_scroll_amount
+			var scroll_amount = display_length*0.025*pan_scroll_amount
 			self.display_start_time += scroll_amount
 			self.display_end_time += scroll_amount
 #		grid_material.set_shader_parameter("Time_Test", event_time_pos)

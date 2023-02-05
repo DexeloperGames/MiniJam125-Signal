@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ChartResource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ChartResource.gd" id="1_xj8hi"]
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_hbors"]
+
+[resource]
+script = ExtResource("1_xj8hi")
+base_bpm = 128.0
+time_signature = Vector2i(4, 4)
+chart_data = PackedVector3Array(0, 0, 0)
+audio = SubResource("AudioStreamWAV_hbors")
+difficulty = 0.0
+title = "CR4Z31 B4553S"
+artist = "Dexel"
+charter = "Dexel"
